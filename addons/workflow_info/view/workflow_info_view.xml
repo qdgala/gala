@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+        <template id="workflow_info_backend" name="workflow_info assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/workflow_info/static/src/js/workflow_widget.js"></script>
+            </xpath>
+        </template>
+
+    </data>
+</openerp>

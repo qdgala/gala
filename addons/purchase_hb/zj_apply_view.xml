@@ -1,0 +1,350 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <record id="zj_apply_form" model="ir.ui.view">
+            <field name="name">zj.apply.form</field>
+            <field name="model">zj.apply</field>
+            <field name="arch" type="xml">
+                <form string="zj apply">
+                <header>
+                    <button name="button_confirm" type="object" states="draft" string="确认申请" id="draft_confirm"/>
+                    <button name="button_confirm_fan" type="object" states="done" string="重置为草稿" id="draft_confirm_fan"/>
+                    <button name="button_quxiao" type="object" states="done" string="取消申请" id="draft_quxiao"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done,quxiao" readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <label string="质检单"/>
+                            <field name="name" class="oe_inline" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="date"/>
+                            <field name="create_uid"/>
+                            <field name="create_date"/>
+                        </group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="department_id"/>
+                            <field name="employee_sh_id"/>
+                            <field name="sale"/>
+                            <field name="purchase"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="产品明细">
+                            <field name="order">
+                                <tree string="zj apply Lines" editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="product_qty"/>
+                                    <field name="bl"/>
+                                    <field name="qty_jy"/>
+                                    <field name="hg"/>
+                                    <field name="bhg"/>
+                                    <field name="blyy"/>
+                                    <field name="xth"/>
+                                    <field name="sjth"/>
+                                    <field name="sjsh"/>
+                                    <field name="hgl"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="zj_cj_apply_form" model="ir.ui.view">
+            <field name="name">zj.apply.form</field>
+            <field name="model">zj.apply</field>
+            <field name="arch" type="xml">
+                <form string="zj apply">
+                <header>
+                    <button name="button_confirm" type="object" states="draft" string="确认申请" id="draft_confirm"/>
+                    <button name="button_confirm_fan" type="object" states="done" string="重置为草稿" id="draft_confirm_fan"/>
+                    <button name="button_quxiao" type="object" states="done" string="取消申请" id="draft_quxiao"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,done,quxiao" readonly="1"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <label string="质检单"/>
+                            <field name="name" class="oe_inline" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="date"/>
+                            <field name="create_uid"/>
+                            <field name="create_date"/>
+                        </group>
+                        <group>
+                            <field name="employee_id"/>
+                            <field name="department_id"/>
+                            <field name="employee_sh_id"/>
+                            <field name="department"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="产品明细">
+                            <field name="order">
+                                <tree string="zj apply Lines" editable="bottom">
+                                    <field name="product_id"/>
+                                    <field name="product_qty"/>
+                                    <field name="bl"/>
+                                    <field name="qty_jy"/>
+                                    <field name="hg"/>
+                                    <field name="bhg"/>
+                                    <field name="blyy"/>
+                                    <field name="xth"/>
+                                    <field name="sjth"/>
+                                    <field name="sjsh"/>
+                                    <field name="hgl"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_zj_apply_filter" model="ir.ui.view">
+            <field name="name">zj.apply.list.select</field>
+            <field name="model">zj.apply</field>
+            <field name="arch" type="xml">
+                <search string="Search zj apply">
+                    <filter name = "cjzjd" string="车间质检单" domain="[('purchase','!=',False)]" context="{}" />
+                    <filter name = "cgzjd" string="采购质检单" domain="[('department','!=',False)]" context="{}" />
+                </search>
+            </field>
+        </record>
+
+        <record id="zj_apply_tree" model="ir.ui.view">
+            <field name="name">zj.apply.tree</field>
+            <field name="model">zj.apply</field>
+            <field name="arch" type="xml">
+                <tree  string="zj apply">
+                    <field name="name" string="序号"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="zj_apply" model="ir.actions.act_window">
+            <field name="name">质检单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">zj.apply</field>
+            <field name="context">{"search_default_cgzjd":1}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_zj_apply_filter"/>
+        </record>
+
+        <record id="action_zj_apply_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="zj_apply_tree"/>
+            <field name="act_window_id" ref="zj_apply"/>
+        </record>
+
+        <record id="action_zj_apply_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="zj_apply_form"/>
+            <field name="act_window_id" ref="zj_apply"/>
+        </record>
+
+        <record id="zjcj_apply" model="ir.actions.act_window">
+            <field name="name">车间质检单</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">zj.apply</field>
+            <field name="context">{"search_default_cjzjd":1}</field>
+            <field name="domain">[('department', '!=', False)]</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_zj_apply_filter"/>
+        </record>
+
+        <record id="action_zjcj_apply_tree" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="zj_apply_tree"/>
+            <field name="act_window_id" ref="zjcj_apply"/>
+        </record>
+
+        <record id="action_zjcj_apply_form" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="zj_cj_apply_form"/>
+            <field name="act_window_id" ref="zjcj_apply"/>
+        </record>
+
+        <record id="seq_zj_apply" model="ir.sequence">
+            <field name="name">zj apply</field>
+            <field name="code">zj.apply</field>
+            <field name="prefix">zj</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <menuitem action="zj_apply" id="menu_zj_apply"
+            parent="stock.menu_stock_inventory_control"
+            sequence="8" name="质检单"/>
+        <menuitem action="zjcj_apply" id="menu_zjcj_apply"
+            parent="stock.menu_stock_inventory_control"
+            sequence="9" name="车间质检单"/>
+        <menuitem action="zj_apply" id="menu_purchase_zj_apply"
+                parent="purchase.menu_purchase_control"
+                sequence="8" name="质检单"/>
+    <!--明细-->
+
+    <record id="zj_apply_order_form" model="ir.ui.view">
+            <field name="name">zj.apply.order.form</field>
+            <field name="model">zj.apply.order</field>
+            <field name="arch" type="xml">
+                <form string="zj apply">
+                    <sheet>
+                        <group>
+                            <field name="apply"/>
+                            <field name="partner_id"/>
+                            <field name="date"/>
+                            <field name="create_uid"/>
+                            <field name="product_id"/>
+                            <field name="product_qty"/>
+                            <field name="bl"/>
+                            <field name="qty_jy"/>
+                            <field name="hg"/>
+                            <field name="bhg"/>
+                            <field name="blyy"/>
+                            <field name="xth"/>
+                            <field name="sjth"/>
+                            <field name="sjsh"/>
+                            <field name="hgl"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_zj_apply_order_filter" model="ir.ui.view">
+            <field name="name">zj.apply.order.list.select</field>
+            <field name="model">zj.apply.order</field>
+            <field name="arch" type="xml">
+                <search string="Search zj apply">
+                    <field name="apply"/>
+                    <field name="partner_id"/>
+                    <field name="date"/>
+                    <field name="create_uid"/>
+                    <field name="blyy"/>
+                    <group expand="0" string="Group By">
+                        <filter string="供应商" domain="[]" context="{'group_by' : 'partner_id'}" />
+                        <filter string="质检单" domain="[]" context="{'group_by' : 'apply'}" />
+                        <filter string="时间" domain="[]" context="{'group_by' :'date'}"/>
+                        <filter string="制单人" domain="[]" context="{'group_by' : 'create_uid'}" />
+                        <filter string="不良原因" domain="[]" context="{'group_by' : 'blyy'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+    <record id="zj_apply_order_tree" model="ir.ui.view">
+            <field name="name">zj.apply.order.tree</field>
+            <field name="model">zj.apply.order</field>
+            <field name="arch" type="xml">
+                <tree  string="zj apply order">
+                    <field name="apply"/>
+                    <field name="partner_id"/>
+                    <field name="date"/>
+                    <field name="create_uid"/>
+                    <field name="product_id"/>
+                    <field name="product_qty"/>
+                    <field name="bl"/>
+                    <field name="qty_jy"/>
+                    <field name="hg"/>
+                    <field name="bhg"/>
+                    <field name="blyy"/>
+                    <field name="xth"/>
+                    <field name="sjth"/>
+                    <field name="sjsh"/>
+                    <field name="hgl"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="win_zj_apply_order" model="ir.actions.act_window">
+            <field name="name">质检单明细</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">zj.apply.order</field>
+            <field name="context">{}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_zj_apply_order_filter"/>
+        </record>
+
+        <menuitem action="win_zj_apply_order" id="menu_zj_apply_order"
+            parent="stock.menu_stock_inventory_control"
+            sequence="10" name="质检单明细"/>
+        <menuitem action="win_zj_apply_order" id="menu_zj_purchase_apply_order"
+                parent="purchase.menu_purchase_control"
+                sequence="10" name="质检单明细"/>
+    <!--不良原因-->
+
+    <record id="zj_blyy_form" model="ir.ui.view">
+            <field name="name">zj.blyy.form</field>
+            <field name="model">zj.blyy</field>
+            <field name="arch" type="xml">
+                <form string="zj apply">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    <record id="view_zj_blyy_filter" model="ir.ui.view">
+            <field name="name">zj.blyy.list.select</field>
+            <field name="model">zj.blyy</field>
+            <field name="arch" type="xml">
+                <search string="zj blyy apply">
+                </search>
+            </field>
+        </record>
+
+    <record id="zj_blyy_tree" model="ir.ui.view">
+            <field name="name">zj.blyy.tree</field>
+            <field name="model">zj.blyy</field>
+            <field name="arch" type="xml">
+                <tree  string="zj apply order">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="win_zj_blyy_order" model="ir.actions.act_window">
+            <field name="name">不良原因</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">zj.blyy</field>
+            <field name="context">{}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_zj_blyy_filter"/>
+        </record>
+
+        <menuitem action="win_zj_blyy_order" id="menu_zj_blyy_order"
+            parent="stock.menu_stock_config_settings"
+            sequence="18" name="不良原因"/>
+
+
+</data>
+</openerp>

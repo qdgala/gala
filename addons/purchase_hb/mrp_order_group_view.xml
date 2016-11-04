@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="view_mrp_apply_order_create" model="ir.ui.view">
+            <field name="name">mrp.apply.order.create</field>
+            <field name="model">mrp.apply.order.create</field>
+            <field name="arch" type="xml">
+               <form string="Merge orders">
+                    <footer>
+                        <button name="add_mrp_new" string="创建生产单" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="选中明细生成生产单"
+            res_model="mrp.apply.order.create"
+            src_model="mrp.apply.order"
+            view_mode="form"
+            target="new"
+            multi="True"
+            key2="client_action_multi"
+            id="action_view_mrp_apply_order_group"/>
+
+        <record id="view_mrp_purchase_apply_order_create" model="ir.ui.view">
+            <field name="name">mrp.purchase.apply.order.create</field>
+            <field name="model">mrp.purchase.apply.order.create</field>
+            <field name="arch" type="xml">
+               <form string="Merge orders">
+                    <footer>
+                        <button name="create_purchase" string="创建采购申请" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <act_window name="选中明细生成采购申请"
+            res_model="mrp.purchase.apply.order.create"
+            src_model="mrp.apply.order"
+            view_mode="form"
+            target="new"
+            multi="True"
+            key2="client_action_multi"
+            id="action_view_mrp_purchase_apply_order_group"/>
+
+    </data>
+</openerp>
+

@@ -1,0 +1,100 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <record id="purchase_order_line_tree_qxs" model="ir.ui.view">
+            <field name="name">purchase.order.line.tree.qxs</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <tree string="Purchase Order Lines" create="false">
+                    <field name="order_id"/>
+                    <field name="name"/>
+                    <field name="partner_id" string="供应商" />
+                    <field name="product_uom" groups="product.group_uom"/>
+                    <field name="product_id"/>
+                    <field name="price_unit"/>
+                    <field name="product_qty"/>
+                    <field name="qty_received"/>
+                    <field name="qty_invoiced"/>
+                    <field name="kp_total"/>
+                    <field name="yingfk_total"/>
+                    <field name="yfk_total"/>
+                    <field name="wfk_total"/>
+                    <field name="date_planned"  widget="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="purchase_order_line_form_qxs" model="ir.ui.view">
+            <field name="name">purchase.order.line.form.qxs</field>
+            <field name="model">purchase.order.line</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <form string="Purchase Order Line" create="false">
+                    <sheet>
+                        <label for="order_id" class="oe_edit_only"/>
+                        <h1>
+                            <field name="order_id" class="oe_inline"/>
+                            <label string="," attrs="{'invisible':[('date_order','=',False)]}"/>
+                            <field name="date_order" class="oe_inline"/>
+                        </h1>
+                        <label for="partner_id" class="oe_edit_only"/>
+                        <h2><field name="partner_id"/></h2>
+                        <group>
+                            <group>
+                                <field name="product_id" readonly="1"/>
+                                <label for="product_qty"/>
+                                <div>
+                                    <field name="product_qty" readonly="1" class="oe_inline"/>
+                                    <field name="product_uom" readonly="1" groups="product.group_uom" class="oe_inline"/>
+                                </div>
+                                <field name="price_unit"/>
+                            </group>
+                            <group>
+                                <field name="taxes_id" widget="many2many_tags"
+                                    domain="[('type_tax_use', '=', 'purchase')]"/>
+                                <field name="date_planned" widget="date" readonly="1"/>
+                                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                                <field name="account_analytic_id" colspan="4" groups="purchase.group_analytic_accounting"/>
+                            </group>
+                        </group>
+                        <field name="name"/>
+                        <separator string="开票"/>
+                        <field name="invoice_lines"/>
+                        <separator string="库存移动"/>
+                        <field name="move_ids"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+          <record id="purchase_order_line_search_qxs" model="ir.ui.view">
+            <field name="name">purchase.order.line.search.qxs</field>
+            <field name="model">purchase.order.line</field>
+            <field name="arch" type="xml">
+                <search string="Search Purchase Order">
+                    <field name="order_id"/>
+                    <field name="product_id"/>
+                    <field name="partner_id" string="Vendor" filter_domain="[('partner_id', 'child_of', self)]"/>
+                    <filter name="hide_cancelled" string="Hide cancelled lines" domain="[('state', '!=', 'cancel')]"/>
+                    <group expand="0" string="Group By">
+                        <filter name="groupby_supplier" string="Vendor" domain="[]" context="{'group_by' : 'partner_id'}" />
+                        <filter name="groupby_product" string="Product" domain="[]" context="{'group_by' : 'product_id'}" />
+                        <filter string="Order Reference" domain="[]" context="{'group_by' :'order_id'}"/>
+                        <filter string="Status" domain="[]" context="{'group_by' : 'state'}" />
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_purchase_order_line_qxs">
+            <field name="context">{}</field>
+            <field name="domain">[]</field>
+            <field name="name">采购订单执行情况跟踪表</field>
+            <field name="res_model">purchase.order.line</field>
+            <field name="view_id" ref="purchase_order_line_tree_qxs"/>
+        </record>
+
+        <menuitem action="action_purchase_order_line_qxs" id="menu_purchase_order_line_qxs"
+            parent="purchase.menu_procurement_management"
+            sequence="8" name="采购订单执行情况跟踪表"/>
+</data>
+</openerp>
