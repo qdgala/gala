@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+        <record model="ir.ui.view" id="view_oa_recruitment_tree">
+            <field name="name">人员招聘申请</field>
+            <field name="model">oa.recruitment</field>
+            <field name="arch" type="xml">
+                <tree string="人员招聘申请">
+                    <field name="apply_no"/>
+                    <field name="apply_date"/>
+                    <field name="plan_date"/>
+                    <field name="apply_emp_id"/>
+                    <field name="department_id"/>
+                    <field name="apply_count"/>
+                    <field name="job_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_oa_recruitment_form">
+            <field name="name">人员招聘申请</field>
+            <field name="model">oa.recruitment</field>
+            <field name="arch" type="xml">
+                <form string="人员招聘申请">
+                    <header>
+                        <button string="关闭" name="bmldsq_cancel" states="bmldsq" type="workflow_stop" class="oe_highlight"/>
+
+                        <button string="申请" name="bmldsq_to" states="bmldsq" type="workflow_submit"
+                                class="oe_highlight"/>
+                        <button string="副总审批" name="fzsp_zjlsp" states="fzsp" type="workflow_ok" class="oe_highlight"/>
+                        <button string="总经理审批" name="zjlsp_xzbqr" states="zjlsp" type="workflow_ok" class="oe_highlight"/>
+                        <button string="行政部确认" name="xzbqr_ok" states="xzbqr" type="workflow_ok" class="oe_highlight"/>
+
+                        <button string="副总驳回" name="fzsp_bmldsq" states="fzsp" type="workflow_no" class="oe_highlight"/>
+                        <button string="总经理驳回" name="zjlsp_back" states="zjlsp" type="workflow_no" class="oe_highlight"/>
+
+                        <field name="state" widget="statusbar" statusbar_visible="bmldsq,fzsp,zjlsp,xzbqr"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="apply_no" readonly="1"/>
+                                <field name="apply_emp_id"/>
+                                <field name="job_id"/>
+                                <field name="plan_date"/>
+                            </group>
+                            <group>
+                                <field name="apply_date"/>
+                                <field name="department_id"/>
+                                <field name="salary_range"/>
+                                <field name="apply_count"/>
+                            </group>
+                        </group>
+                        <group string="申请原因">
+                            <field name="cause" nolabel="1"/>
+                        </group>
+                        <group string="人员要求">
+                            <field name="required" nolabel="1"/>
+                        </group>
+                        <group string="审批意见">
+                            <field name="opinion_ids" nolabel="1" readonly="1" colspan="4"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_oa_recruitment_search">
+            <field name="name">人员招聘申请搜索视图</field>
+            <field name="model">oa.recruitment</field>
+            <field name="arch" type="xml">
+                <search string="人员招聘申请搜索视图">
+                    <filter string="待办" name="message_needaction" domain="[('is_needaction','=',True)]"/>
+                    <!--<field name="name"/>-->
+                    <!--<separator/>-->
+                    <!--<filter string="未完成任务" domain="[('state','!=','done')]"/>-->
+                    <!--<separator/>-->
+                    <!--<group expand="0" string="Group By">-->
+                    <!--<filter string="状态" domain="[]" context="{'group_by':'state'}"/>-->
+                    <!--</group>-->
+
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_oa_recruitment">
+            <field name="name">人员招聘申请</field>
+            <field name="res_model">oa.recruitment</field>
+            <field name="view_type">form</field>
+            <field name="domain"></field>
+            <field name="view_mode">tree,form</field>
+            <!--<field name="context"></field>-->
+            <field name="search_view_id" ref="view_oa_recruitment_search"/>
+            <field name="view_id" ref="view_oa_recruitment_tree"/>
+        </record>
+
+
+        <menuitem id="menu_oa_wkf_base" sequence="10" name="OA"/>
+        <menuitem id="menu_oa_wkf" parent="menu_oa_wkf_base" sequence="10" name="OA"/>
+        <menuitem id="menu_action_oa_recruitment" parent="menu_oa_wkf" sequence="10"
+                  action="action_oa_recruitment" name="人员招聘申请"/>
+
+
+        <!--序列-->
+        <record forcecreate="1" id="seq_oa_recruitment_no" model="ir.sequence">
+            <field name="name">招聘申请</field>
+            <field name="code">oa.recruitment.no</field>
+            <field name="padding" eval="6"/>
+            <!--<field name="prefix" eval="Q"/>-->
+            <!--<field name="number_next_actual" eval="4000"/>-->
+        </record>
+
+
+    </data>
+</openerp>

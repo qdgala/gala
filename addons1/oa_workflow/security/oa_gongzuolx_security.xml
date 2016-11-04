@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+        <record model="ir.rule" id="oa_gongzuolx_write_rule">
+            <field name="name">只能修改自己未提交的表单</field>
+            <field name="model_id" ref="model_oa_gongzuolx"/>
+            <field name="domain_force">[('state','=','sq'),('create_uid','=',user.id)]</field>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_read" eval="False"/>
+        </record>
+        <record model="ir.rule" id="oa_gongzuolx_unlink_rule">
+            <field name="name">非新建状态不允许删除</field>
+            <field name="model_id" ref="model_oa_gongzuolx"/>
+            <field name="domain_force">[('state','=','sq')]</field>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="False"/>
+        </record>
+
+        <record model="ir.rule" id="oa_gongzuolx_read1_rule">
+            <field name="name">申请人可见</field>
+            <field name="model_id" ref="model_oa_gongzuolx"/>
+            <field name="domain_force">
+                ['|',('create_uid','=',user.id),('from_emp_id','=',user.employee_ids.id)]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('base.group_user')])]"/>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+        <record model="ir.rule" id="oa_gongzuolx_read2_rule">
+            <field name="name">接收人可见</field>
+            <field name="model_id" ref="model_oa_gongzuolx"/>
+            <field name="domain_force">
+                [('state','!=','sq'),('to_emp_id','=',user.employee_ids.id)]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('base.group_user')])]"/>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+
+    </data>
+</openerp>

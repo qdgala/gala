@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+        <record model="ir.rule" id="oa_qingjia_write_rule">
+            <field name="name">只能修改自己未提交的请假单</field>
+            <field name="model_id" ref="model_oa_qingjia"/>
+            <field name="domain_force">[('state','=','sq'),('create_uid','=',user.id)]</field>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_read" eval="False"/>
+        </record>
+        <record model="ir.rule" id="oa_qingjia_unlink_rule">
+            <field name="name">非新建状态不允许删除</field>
+            <field name="model_id" ref="model_oa_qingjia"/>
+            <field name="domain_force">[('state','=','sq')]</field>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="False"/>
+        </record>
+
+
+        <record model="ir.rule" id="oa_qingjia_read1_rule">
+            <field name="name">创建人 申请人 可见</field>
+            <field name="model_id" ref="model_oa_qingjia"/>
+            <field name="domain_force">['|',('create_uid','=',user.id),('emp_id','=', user.employee_ids.id)]</field>
+            <field name="groups" eval="[(6, 0,  [ref('base.group_user')])]"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+        <record model="ir.rule" id="oa_qingjia_read2_rule">
+            <field name="name">上级领导可见</field>
+            <field name="model_id" ref="model_oa_qingjia"/>
+            <field name="domain_force">[('state','!=','sq'),('emp_id','in', user.employee_ids.child_ids.ids)]</field>
+            <field name="groups" eval="[(6, 0,  [ref('base.group_user')])]"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+
+        <record model="ir.rule" id="oa_qingjia_read3_rule">
+            <field name="name">行政部可见</field>
+            <field name="model_id" ref="model_oa_qingjia"/>
+            <field name="domain_force">[('state','in',['xzbqr','ok','off'])]</field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_xzb')])]"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+        <record model="ir.rule" id="oa_qingjia_read4_rule">
+            <field name="name">总经理可见</field>
+            <field name="model_id" ref="model_oa_qingjia"/>
+            <field name="domain_force">[('total_time','>=',3),('state','not in',['sq','ldsp'])]</field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_boss')])]"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+        <record model="ir.rule" id="oa_qingjia_read5_rule">
+            <field name="name">副总可见</field>
+            <field name="model_id" ref="model_oa_qingjia"/>
+            <field name="domain_force">[('state','not in',['sq','ldsp']),('total_time','>=',3),('emp_id','child_of',user.employee_ids.ids)]</field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_fz')])]"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+
+
+    </data>
+</openerp>

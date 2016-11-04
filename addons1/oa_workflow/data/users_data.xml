@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+        <record id="data_res_users_hd_0" model="res.users">
+            <field name="name">张柠慧</field>
+            <field name="login">zhangninghui@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_1" model="res.users">
+            <field name="name">王尚旺</field>
+            <field name="login">wangshangwang@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_2" model="res.users">
+            <field name="name">任幼鸣</field>
+            <field name="login">renyouming@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_3" model="res.users">
+            <field name="name">魏光磊</field>
+            <field name="login">weiguanglei@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_4" model="res.users">
+            <field name="name">孙典春</field>
+            <field name="login">sundianchun@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_5" model="res.users">
+            <field name="name">姚尧</field>
+            <field name="login">yaoyao@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_6" model="res.users">
+            <field name="name">曹锐</field>
+            <field name="login">caorui@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_7" model="res.users">
+            <field name="name">姜永彬</field>
+            <field name="login">jiangyongbin@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_8" model="res.users">
+            <field name="name">靳琳</field>
+            <field name="login">jinlin@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_9" model="res.users">
+            <field name="name">孙静梅</field>
+            <field name="login">sunjingmei@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_10" model="res.users">
+            <field name="name">吴清洵</field>
+            <field name="login">wuqingxun@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_11" model="res.users">
+            <field name="name">张金喜</field>
+            <field name="login">zhangjinxi@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_12" model="res.users">
+            <field name="name">刘秀玲</field>
+            <field name="login">liuxiuling@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_13" model="res.users">
+            <field name="name">孟玉英</field>
+            <field name="login">mengyuying@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_14" model="res.users">
+            <field name="name">李彬</field>
+            <field name="login">libin@huadan2016.com</field>
+        </record>
+
+        <record id="data_res_users_hd_15" model="res.users">
+            <field name="name">叶双萍</field>
+            <field name="login">yeshuangping@huadan2016.com</field>
+        </record>
+
+    </data>
+</openerp>

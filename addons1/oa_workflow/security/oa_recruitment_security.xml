@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+        <record model="ir.rule" id="oa_recruitment_create_rule">
+            <field name="name">只能创建自己的单据</field>
+            <field name="model_id" ref="model_oa_recruitment"/>
+            <field name="domain_force">[('create_uid','=',user.id)]</field>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="False"/>
+        </record>
+        <record model="ir.rule" id="oa_recruitment_write_rule">
+            <field name="name">只能修改自己未提交的单据</field>
+            <field name="model_id" ref="model_oa_recruitment"/>
+            <field name="domain_force">[('state','in',['bmldsq',False]),('create_uid','=',user.id)]</field>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_read" eval="False"/>
+        </record>
+        <record model="ir.rule" id="oa_recruitment_unlink_rule">
+            <field name="name">非新建状态不允许删除</field>
+            <field name="model_id" ref="model_oa_recruitment"/>
+            <field name="domain_force">[('state','=','bmldsq')]</field>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="False"/>
+        </record>
+        <record model="ir.rule" id="oa_recruitment_read1_rule">
+            <field name="name">创建人读取权限</field>
+            <field name="model_id" ref="model_oa_recruitment"/>
+            <field name="domain_force">
+                ['|',('create_uid','=',user.id),('apply_emp_id','=',user.employee_ids.id)]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('base.group_user')])]"/>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+        <record model="ir.rule" id="oa_recruitment_read2_rule">
+            <field name="name">副总读取权限</field>
+            <field name="model_id" ref="model_oa_recruitment"/>
+            <field name="domain_force">
+                [('state','!=','bmldsq'),('apply_emp_id','child_of',user.employee_ids.child_ids.ids)]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_fz')])]"/>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+        <record model="ir.rule" id="oa_recruitment_read3_rule">
+            <field name="name">总经理读取权限</field>
+            <field name="model_id" ref="model_oa_recruitment"/>
+            <field name="domain_force">
+                [('state','not in',['bmldsq','fzsp'])]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_boss')])]"/>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+        <record model="ir.rule" id="oa_recruitment_read4_rule">
+            <field name="name">行政部读取权限</field>
+            <field name="model_id" ref="model_oa_recruitment"/>
+            <field name="domain_force">
+                [('state','in',['xzbqr','ok','cancel'])]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_xzb')])]"/>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+
+
+    </data>
+</openerp>

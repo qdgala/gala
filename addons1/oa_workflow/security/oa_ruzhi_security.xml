@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+        <!--行政部经理可创建-->
+        <!--行政部/入职人员/入职人员的上级领导可见-->
+        <!--行政部非完成状态下可修改删除-->
+
+
+        <record model="ir.rule" id="oa_ruzhi_write_rule">
+            <field name="name">仅申请状态可修改</field>
+            <field name="model_id" ref="model_oa_ruzhi"/>
+            <field name="domain_force">[('state','=','sq')</field>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_read" eval="False"/>
+        </record>
+        <record model="ir.rule" id="oa_ruzhi_unlink_rule">
+            <field name="name">仅申请状态可删除</field>
+            <field name="model_id" ref="model_oa_ruzhi"/>
+            <field name="domain_force">[('state','=','sq')</field>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="False"/>
+        </record>
+
+        <record model="ir.rule" id="oa_ruzhi_read1_rule">
+            <field name="name">行政部/总经理 可读取</field>
+            <field name="model_id" ref="model_oa_ruzhi"/>
+            <field name="domain_force">
+                [(1,'=',1)]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_xzb'),ref('oa_workflow.group_oa_department_boss')])]"/>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+        <record model="ir.rule" id="oa_ruzhi_read2_rule">
+            <field name="name">上级领导 可读取</field>
+            <field name="model_id" ref="model_oa_ruzhi"/>
+            <field name="domain_force">
+                [('department_id','in',user.employee_ids.department_ids.ids)]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('base.group_user')])]"/>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+
+    </data>
+</openerp>

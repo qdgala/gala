@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="print_oa_gongzuolx">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <style>
+                        table {
+                        border: solid 1px #000;
+                        width: 100%;
+                        }
+                        tr{
+                        height:40px;
+                        }
+                        th {
+                        margin-top:5px;
+                        padding-left: 10px;
+                        border: solid 1px #000;
+                        font-size:20px;
+                        }
+
+                        td {
+                        margin-top:5px;
+                        padding-left: 10px;
+                        border: solid 1px #000;
+                        font-size:20px;
+                        align="center";
+                        valign="middle";
+                        }
+                        h2{
+                        font-size:50px;
+                        }
+                    </style>
+                    <h2 align="center">工作联系单</h2>
+                    <table>
+                        <tr>
+                            <th>发出部门</th><td><span t-field="o.from_department_id"/></td>
+                            <th>发出人</th><td><span t-field="o.from_emp_id"/></td>
+                            <th>发出时间</th><td><span t-field="o.from_time"/></td>
+                        </tr>
+                        <tr>
+                            <th>接收部门</th><td><span t-field="o.to_department_id"/></td>
+                            <th>接收人</th><td><span t-field="o.to_emp_id"/></td>
+                            <th>接收时间</th><td><span t-field="o.to_time"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                附件：<br/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                需要联系的工作内容：<br/><br/>
+                                <span t-field="o.neirong"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                接收部门反馈意见及处理方法：<br/><br/>
+                                <span t-field="o.chuli"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                发出部门对反馈意见及处理方法的评价：<br/><br/>
+                                <span t-field="o.pingjia"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">
+                                注：1、接收部门填写好反馈意见后，立即将此单转发发出部门；
+                            </td>
+                        </tr>
+                    </table>
+
+                    <br/>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <report
+            id="report_oa_gongzuolx_html"
+            string="打印工作联系单_HTML"
+            model="oa.gongzuolx"
+            report_type="qweb-html"
+            file="oa_workflow.print_oa_gongzuolx"
+            name="oa_workflow.print_oa_gongzuolx"
+    />
+    <report
+            id="report_oa_gongzuolx_pdf"
+            string="打印工作联系单_PDF"
+            model="oa.gongzuolx"
+            report_type="qweb-pdf"
+            file="oa_workflow.print_oa_gongzuolx"
+            name="oa_workflow.print_oa_gongzuolx"
+    />
+
+</odoo>

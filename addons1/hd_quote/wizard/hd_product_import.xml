@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+
+        <record model="ir.ui.view" id="view_hd_product_import_demo_form">
+            <field name="name">导入报价单</field>
+            <field name="model">hd.product.import.demo</field>
+            <field name="arch" type="xml">
+                <form string="导入报价单">
+                    <group>
+                        <field name="excel"/>
+                    </group>
+                    <footer>
+                        <button name="btn_import" string="导入产品" type="object" class="btn-primary"/>
+                        <button name="btn_cb_import" string="导入成本价" type="object" class="btn-primary"/>
+                        <button string="取消" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+        <record model="ir.actions.act_window" id="action_hd_product_import_demo">
+            <field name="name">导入报价单</field>
+            <field name="res_model">hd.product.import.demo</field>
+            <field name="view_type">form</field>
+            <field name="domain"></field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_action_hd_product_import_demo" action="action_hd_product_import_demo" parent="base.menu_sale_config"
+                  sequence="30" name="导入报价单"/>
+
+
+    </data>
+</openerp>

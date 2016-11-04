@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+        <record model="ir.ui.view" id="view_oa_ruzhi_tree">
+            <field name="name">入职信息登记表</field>
+            <field name="model">oa.ruzhi</field>
+            <field name="arch" type="xml">
+                <tree string="入职信息登记表">
+                    <field name="name"/>
+                    <field name="gender"/>
+                    <field name="age"/>
+                    <field name="job"/>
+                    <field name="state"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_oa_ruzhi_form">
+            <field name="name">入职信息登记表</field>
+            <field name="model">oa.ruzhi</field>
+            <field name="arch" type="xml">
+                <form string="入职信息登记表">
+                    <header>
+                        <button string="完成" name="sq_ok" states="sq" type="workflow_ok" class="oe_highlight"/>
+                        <!--<button string="关闭" name="sq_off" states="sq" type="workflow_stop" class="oe_highlight"/>-->
+
+                        <!--<button string="当事人申请" name="sq_xzb" states="sq" type="workflow_ok" class="oe_highlight"/>-->
+                        <!--<button string="行政部经理审批" name="xzb_bm" states="xzb" type="workflow_ok" class="oe_highlight"/>-->
+                        <!--<button string="部门经理审批" name="bm_zjl" states="bm" type="workflow_ok" class="oe_highlight"/>-->
+                        <!--<button string="总经理审批" name="zjl_rs" states="zjl" type="workflow_ok" class="oe_highlight"/>-->
+                        <!--<button string="人事专员确认" name="rs_ok" states="rs" type="workflow_ok" class="oe_highlight"/>-->
+
+                        <!--<button string="行政部经理驳回" name="xzb_sq" states="xzb" type="workflow_no" class="oe_highlight"/>-->
+                        <!--<button string="部门经理驳回" name="bm_xzb" states="bm" type="workflow_no" class="oe_highlight"/>-->
+                        <!--<button string="总经理驳回" name="zjl_bm" states="zjl" type="workflow_no" class="oe_highlight"/>-->
+
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <div>
+                            <field name="image" widget='image' class="oe_avatar"/>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="gender"/>
+                                <field name="age"/>
+                                <field name="job"/>
+                                <field name="xueli"/>
+                                <field name="marital"/>
+                                <field name="id_no"/>
+                                <field name="native_place"/>
+                                <field name="addr"/>
+
+
+                            </group>
+                            <group>
+                                <field name="native"/>
+                                <field name="nation"/>
+                                <field name="blood"/>
+                                <field name="health"/>
+                                <field name="height"/>
+                                <field name="weight"/>
+                                <field name="phone"/>
+                                <field name="skills"/>
+                                <field name="plan_salary"/>
+
+
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="资料">
+                                <group string="工作经验">
+                                    <field name="work_exp_ids" nolabel="1" colspan="4"/>
+                                </group>
+                                <group string="教育培训经历">
+                                    <field name="edu_exp_ids" nolabel="1" colspan="4"/>
+                                </group>
+                                <group string="家庭信息">
+                                    <field name="family_info_ids" nolabel="1" colspan="4"/>
+                                </group>
+                                <group string="受过何种奖励或专业训练">
+                                    <field name="rongyu" nolabel="1" colspan="4"/>
+                                </group>
+                            </page>
+                            <page string="审批">
+                                <group>
+                                    <group>
+                                        <field name="ruzhi_date"/>
+                                        <field name="department_id"/>
+                                        <field name="job_id"/>
+
+                                    </group>
+                                    <group>
+                                        <field name="shiyong_sj"/>
+                                        <field name="shiyong_gz"/>
+                                        <field name="zhuanzheng_gz"/>
+                                    </group>
+                                </group>
+                            </page>
+                        </notebook>
+                        <group string="审批意见">
+                            <field name="opinion_ids" nolabel="1" readonly="1" colspan="4"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_oa_ruzhi_search">
+            <field name="name">入职信息登记表搜索视图</field>
+            <field name="model">oa.ruzhi</field>
+            <field name="arch" type="xml">
+                <search string="入职信息登记表搜索视图">
+                    <filter string="待办" name="message_needaction" domain="[('is_needaction','=',True)]"/>
+                    <!--<field name="name"/>-->
+                    <!--<separator/>-->
+                    <!--<filter string="未完成任务" domain="[('state','!=','done')]"/>-->
+                    <!--<separator/>-->
+                    <!--<group expand="0" string="Group By">-->
+                    <!--<filter string="状态" domain="[]" context="{'group_by':'state'}"/>-->
+                    <!--</group>-->
+
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_oa_ruzhi">
+            <field name="name">入职信息登记表</field>
+            <field name="res_model">oa.ruzhi</field>
+            <field name="view_type">form</field>
+            <field name="domain"></field>
+            <field name="view_mode">tree,form</field>
+            <!--<field name="context"></field>-->
+            <field name="search_view_id" ref="view_oa_ruzhi_search"/>
+            <field name="view_id" ref="view_oa_ruzhi_tree"/>
+        </record>
+
+        <menuitem id="menu_action_oa_ruzhi" action="action_oa_ruzhi" parent="menu_oa_wkf" sequence="130"
+                  name="入职信息登记表"/>
+
+
+    </data>
+</openerp>

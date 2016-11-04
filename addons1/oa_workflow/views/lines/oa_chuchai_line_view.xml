@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+        <record model="ir.ui.view" id="view_oa_chuchai_line_tree">
+            <field name="name">同行人员明细</field>
+            <field name="model">oa.chuchai.line</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom" string="同行人员明细">
+                    <field name="emp_id"/>
+                    <field name="cc_date"/>
+                    <field name="hc_date"/>
+                    <field name="dates"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_oa_chuchai_line_form">
+            <field name="name">同行人员明细</field>
+            <field name="model">oa.chuchai.line</field>
+            <field name="arch" type="xml">
+                <form string="同行人员明细">
+                    <sheet>
+                        <group>
+                            <field name="emp_id"/>
+                            <field name="cc_date"/>
+                            <field name="hc_date"/>
+                            <field name="dates"/>
+                            <field name="cc_id" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--<record model="ir.ui.view" id="view_oa_chuchai_line_search">-->
+        <!--<field name="name">同行人员明细搜索视图</field>-->
+        <!--<field name="model">oa.chuchai.line</field>-->
+        <!--<field name="arch" type="xml">-->
+        <!--<search string="同行人员明细搜索视图">-->
+        <!--&lt;!&ndash;<field name="name"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<separator/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<filter string="未完成任务" domain="[('state','!=','done')]"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<separator/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<group expand="0" string="Group By">&ndash;&gt;-->
+        <!--&lt;!&ndash;<filter string="状态" domain="[]" context="{'group_by':'state'}"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;</group>&ndash;&gt;-->
+        <!---->
+        <!--</search>-->
+        <!--</field>-->
+        <!--</record>-->
+
+        <!--<record model="ir.actions.act_window" id="action_oa_chuchai_line">-->
+        <!--<field name="name">同行人员明细</field>-->
+        <!--<field name="res_model">oa.chuchai.line</field>-->
+        <!--<field name="view_type">form</field>-->
+        <!--<field name="domain"></field>-->
+        <!--<field name="view_mode">tree,form</field>-->
+        <!--&lt;!&ndash;<field name="context"></field>&ndash;&gt;-->
+        <!--<field name="search_view_id" ref="view_oa_chuchai_line_search"/>-->
+        <!--<field name="view_id" ref="view_oa_chuchai_line_tree"/>-->
+        <!--</record>-->
+
+        <!--<menuitem id="menu_action_oa_chuchai_line" action="action_oa_chuchai_line" parent="menu_oa_wkf" sequence="40" name="同行人员明细"/>-->
+
+
+    </data>
+</openerp>

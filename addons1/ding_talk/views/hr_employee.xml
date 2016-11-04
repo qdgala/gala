@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+        <record model="ir.ui.view" id="view_ding_talk_hr_employee_form">
+            <field name="name">dingtalk</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <field name="mobile_phone" position="after">
+                    <field name="dingding"/>
+                </field>
+
+            </field>
+        </record>
+
+    </data>
+</openerp>

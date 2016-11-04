@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+        <record model="ir.ui.view" id="view_oa_zhuanzheng_tree">
+            <field name="name">转正申请</field>
+            <field name="model">oa.zhuanzheng</field>
+            <field name="arch" type="xml">
+                <tree string="转正申请">
+                    <field name="create_uid" string="创建人"/>
+
+                    <field name="emp_id"/>
+                    <field name="department_id"/>
+                    <field name="job_id"/>
+                    <field name="dg_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_oa_zhuanzheng_form">
+            <field name="name">转正申请</field>
+            <field name="model">oa.zhuanzheng</field>
+            <field name="arch" type="xml">
+                <form string="转正申请">
+                    <header>
+                        <button string="关闭" name="sq_off" states="sq" type="workflow_stop" class="oe_highlight"/>
+
+                        <button string="试用期人员申请" states="sq" name="sq_xzb" type="workflow_submit"
+                                class="oe_highlight"/>
+                        <button string="行政部审批" states="xzb" name="xzb_ldsp" type="workflow_ok" class="oe_highlight"/>
+
+                        <button string="直接上级领导审批" name="btn_ldsp" states="ldsp" type="object" class="oe_highlight"/>
+                        <button string="副总审批" states="fzsp" name="fzsp_zjlsp" type="workflow_ok" class="oe_highlight"/>
+                        <button string="总经理审批" states="zjlsp" name="zjlsp_rszyqr" type="workflow_ok"
+                                class="oe_highlight"/>
+                        <button string="人事专员确认" states="rszyqr" name="rszyqr_ok" type="workflow_ok"
+                                class="oe_highlight"/>
+
+                        <button string="行政部驳回" name="xzb_sq" states="xzb" type="workflow_no" class="oe_highlight"/>
+                        <button string="直接上级领导驳回" name="ldsp_xzb" states="ldsp" type="workflow_no" class="oe_highlight"/>
+                        <button string="副总驳回" states="fzsp" name="fzsp_back" type="workflow_no" class="oe_highlight"/>
+                        <button string="总经理驳回" states="zjlsp" name="zjlsp_back" type="workflow_no"
+                                class="oe_highlight"/>
+
+                        <field name="state" widget="statusbar" />
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="emp_id"/>
+                                <field name="department_id"/>
+                                <field name="job_id"/>
+                                <field name="shiyong_qj"/>
+                            </group>
+                            <group>
+                                <field name="xueli"/>
+                                <field name="profession"/>
+                                <field name="dg_date"/>
+                                <field name="wage"/>
+                            </group>
+                        </group>
+                        <group string="试用期间的主要工作表现">
+                            <field name="biaoxian" nolabel="1" colspan="4"/>
+                        </group>
+                        <group string="对公司或部门有何建议">
+                            <field name="jianyi" nolabel="1" colspan="4"/>
+                        </group>
+                        <group>
+                            <group string="自评">
+                                <field name="zhishi"/>
+                                <field name="gongzuo"/>
+                                <field name="xiaolv"/>
+                                <field name="xietiao"/>
+                                <field name="taidu"/>
+                                <field name="pinde"/>
+                                <field name="shangjinxin"/>
+                            </group>
+                            <group string="初核">
+                                <field name="zhishi_b" readonly="1"/>
+                                <field name="gongzuo_b" readonly="1"/>
+                                <field name="xiaolv_b" readonly="1"/>
+                                <field name="xietiao_b" readonly="1"/>
+                                <field name="taidu_b" readonly="1"/>
+                                <field name="pinde_b" readonly="1"/>
+                                <field name="shangjinxin_b" readonly="1"/>
+                            </group>
+                        </group>
+                        <group string="考勤状况">
+                            <div>
+                                <table width="100%">
+                                    <tr>
+                                        <th>迟到(1分/次)</th>
+                                        <th>早退(1分/次)</th>
+                                        <th>病假(1分/次)</th>
+                                        <th>事假(2分/次)</th>
+                                        <th>旷工(3分/次)</th>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <field name="chidao"/>
+                                        </td>
+                                        <td>
+                                            <field name="zhaotui"/>
+                                        </td>
+                                        <td>
+                                            <field name="bingjia"/>
+                                        </td>
+                                        <td>
+                                            <field name="shijia"/>
+                                        </td>
+                                        <td>
+                                            <field name="kuanggong"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="zpr" readonly="1"/>
+                                <field name="chr" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="zpfs" readonly="1"/>
+                                <field name="chfs" readonly="1"/>
+                            </group>
+                        </group>
+                        <group col="4">
+                            <field name="jieguo" widget="radio" readonly="1"/>
+                            <field name="new_date"
+                                   attrs="{'invisible':[('jieguo','not in',['a','d'])],'required':[('jieguo','in',['a','d'])]}"/>
+                        </group>
+                        <group string="部门主管审核评估">
+                            <field name="bm_opinion" nolabel="1" readonly="1" colspan="4"/>
+                        </group>
+                        <div>
+                            <p>1、员工应于试用期满前半个月提出转正申请。</p>
+                            <p>2、试用期内，无故旷工1天以上者立即停止试用。</p>
+                            <p>3、考核成绩90分（含）-100分为优异；80分（含）-90分为良好；70分（含）-80分为一般；70分以下为差。</p>
+                            <p>4、考核等级为“良好”及以上者按期转正，考核等级“一般”者延长试用期一个月，考核等级为“差”者试用期不合格，不予聘用。</p>
+                        </div>
+                        <group string="审批意见">
+                            <field name="opinion_ids" nolabel="1" readonly="1" colspan="4"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_oa_zhuanzheng_search">
+            <field name="name">转正申请搜索视图</field>
+            <field name="model">oa.zhuanzheng</field>
+            <field name="arch" type="xml">
+                <search string="转正申请搜索视图">
+                    <filter string="待办" name="message_needaction" domain="[('is_needaction','=',True)]"/>
+                    <!--<field name="name"/>-->
+                    <!--<separator/>-->
+                    <!--<filter string="未完成任务" domain="[('state','!=','done')]"/>-->
+                    <!--<separator/>-->
+                    <!--<group expand="0" string="Group By">-->
+                    <!--<filter string="状态" domain="[]" context="{'group_by':'state'}"/>-->
+                    <!--</group>-->
+
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_oa_zhuanzheng">
+            <field name="name">转正申请</field>
+            <field name="res_model">oa.zhuanzheng</field>
+            <field name="view_type">form</field>
+            <field name="domain"></field>
+            <field name="view_mode">tree,form</field>
+            <!--<field name="context"></field>-->
+            <field name="search_view_id" ref="view_oa_zhuanzheng_search"/>
+            <field name="view_id" ref="view_oa_zhuanzheng_tree"/>
+        </record>
+
+        <menuitem id="menu_action_oa_zhuanzheng" action="action_oa_zhuanzheng" parent="menu_oa_wkf" sequence="20"
+                  name="转正申请"/>
+
+
+        <record model="ir.ui.view" id="view_oa_zhuanzheng_bmld_form">
+            <field name="name">转正申请 部门领导审批</field>
+            <field name="model">oa.zhuanzheng</field>
+            <field name="arch" type="xml">
+                <form string="转正申请 部门领导审批">
+                    <table width="100%">
+                        <tr>
+                            <th>专业知识(20)</th>
+                            <th>工作能力(20)</th>
+                            <th>工作效率(15)</th>
+                            <th>协调能力(15)</th>
+                            <th>工作态度(15)</th>
+                            <th>品德(10)</th>
+                            <th>上进心(5)</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <field name="zhishi_b"/>
+                            </td>
+                            <td>
+                                <field name="gongzuo_b"/>
+                            </td>
+                            <td>
+                                <field name="xiaolv_b"/>
+                            </td>
+                            <td>
+                                <field name="xietiao_b"/>
+                            </td>
+                            <td>
+                                <field name="taidu_b"/>
+                            </td>
+                            <td>
+                                <field name="pinde_b"/>
+                            </td>
+                            <td>
+                                <field name="shangjinxin_b"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <h2>审批意见</h2>
+                    <field name="opinion" class="wkf_logs_proxy" required="1"/>
+                    <h2>考核结果</h2>
+                    <group>
+                        <field name="jieguo" widget="radio" required="1" nolabel="1"/>
+                        <field name="new_date" attrs="{'invisible':[('jieguo','not in',['a','d'])],'required':[('jieguo','in',['a','d'])]}"/>
+                    </group>
+
+
+                    <footer>
+                        <button string="审批通过" name="ldsp_to" type="workflow_proxy"
+                                log_field="opinion" log_type="ok" class="oe_highlight"/>
+                        <!--<button name="btn_ldsp_ok" type="object" string="审批通过" class="btn-primary"/>-->
+                        <button string="取消" special="cancel" class="btn-default"/>
+                    </footer>
+
+                </form>
+            </field>
+        </record>
+
+    </data>
+</openerp>

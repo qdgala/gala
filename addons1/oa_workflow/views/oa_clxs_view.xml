@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+        <record model="ir.ui.view" id="view_oa_clxs_tree">
+            <field name="name">车辆行驶记录</field>
+            <field name="model">oa.clxs</field>
+            <field name="arch" type="xml">
+                <tree string="车辆行驶记录">
+                    <field name="cl"/>
+                    <field name="code"/>
+                    <field name="jsr"/>
+                    <field name="wlgs"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_oa_clxs_form">
+            <field name="name">车辆行驶记录</field>
+            <field name="model">oa.clxs</field>
+            <field name="arch" type="xml">
+                <form string="车辆行驶记录">
+                    <header>
+                        <button string="创建运费报销" name="create_yfbx" type="object"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="cl"/>
+                                <field name="code"/>
+                                <field name="jsr"/>
+                                <field name="wlgs"/>
+                            </group>
+                            <group>
+                                <field name="lcs"/>
+                                <field name="yf"/>
+                                <field name="sfd"/>
+                                <field name="mdd"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_oa_clxs_search">
+            <field name="name">车辆行驶记录搜索视图</field>
+            <field name="model">oa.clxs</field>
+            <field name="arch" type="xml">
+                <search string="车辆行驶记录搜索视图">
+
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_oa_clxs">
+            <field name="name">车辆行驶记录</field>
+            <field name="res_model">oa.clxs</field>
+            <field name="view_type">form</field>
+            <field name="domain"></field>
+            <field name="view_mode">tree,form</field>
+            <!--<field name="context"></field>-->
+            <field name="search_view_id" ref="view_oa_clxs_search"/>
+            <field name="view_id" ref="view_oa_clxs_tree"/>
+        </record>
+
+        <menuitem id="menu_action_oa_clxs" action="action_oa_clxs" parent="stock.menu_stock_sched" sequence="140"
+                  name="车辆行驶记录"/>
+
+
+    </data>
+</openerp>

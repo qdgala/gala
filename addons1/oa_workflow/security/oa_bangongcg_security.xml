@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+
+        <record model="ir.rule" id="oa_bangongcg_write_rule">
+            <field name="name">只能修改自己未提交的表单</field>
+            <field name="model_id" ref="model_oa_bangongcg"/>
+            <field name="domain_force">[('state','=','sq'),('create_uid','=',user.id)]</field>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_read" eval="False"/>
+        </record>
+        <record model="ir.rule" id="oa_bangongcg_unlink_rule">
+            <field name="name">非新建状态不允许删除</field>
+            <field name="model_id" ref="model_oa_bangongcg"/>
+            <field name="domain_force">[('state','=','sq')]</field>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="False"/>
+        </record>
+
+        <!--使用人申请 部门领导审批 财务部门领导审批 副总（或总经理） 采购专员确认-->
+        <record model="ir.rule" id="oa_bangongcg_read1_rule">
+            <field name="name">创建人/申请人 可见</field>
+            <field name="model_id" ref="model_oa_bangongcg"/>
+            <field name="domain_force">
+                ['|',('create_uid','=',user.id),('emp_id','=',user.employee_ids.id)]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('base.group_user')])]"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+
+        <record model="ir.rule" id="oa_bangongcg_read2_rule">
+            <field name="name">部门主管 可见</field>
+            <field name="model_id" ref="model_oa_bangongcg"/>
+            <field name="domain_force">
+                [('state','!=','sq'),('emp_id','in',user.employee_ids.child_ids.ids)]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('base.group_user')])]"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+
+        <record model="ir.rule" id="oa_bangongcg_read3_rule">
+            <field name="name">财务经理 可见</field>
+            <field name="model_id" ref="model_oa_bangongcg"/>
+            <field name="domain_force">[('state','not in',['sq','bmsp'])]</field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_cwb')])]"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+
+        <record model="ir.rule" id="oa_bangongcg_read4_rule">
+            <field name="name">分管副总可见</field>
+            <field name="model_id" ref="model_oa_bangongcg"/>
+            <field name="domain_force">
+                [('state','in',['fz','cg','ok','off']),('emp_id','child_of',user.employee_ids.child_ids.ids)]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_fz')])]"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+
+        <record model="ir.rule" id="oa_bangongcg_read5_rule">
+            <field name="name">总经理 可见</field>
+            <field name="model_id" ref="model_oa_bangongcg"/>
+            <field name="domain_force">[('state','in',['fz','cg','ok','off'])]</field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_boss')])]"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+        <record model="ir.rule" id="oa_bangongcg_read6_rule">
+            <field name="name">采购专员 可见</field>
+            <field name="model_id" ref="model_oa_bangongcg"/>
+            <field name="domain_force">[('state','in',['cg','ok','off'])]</field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_cgzy')])]"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+    </data>
+</openerp>

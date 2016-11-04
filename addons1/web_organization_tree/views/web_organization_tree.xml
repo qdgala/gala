@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <template id="assets_backend" name="web_organization_tree assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link rel="stylesheet" href="/web_organization_tree/static/src/css/web_organization_tree.css"/>
+                <script type="text/javascript" src="/web_organization_tree/static/src/js/organization_tree_view.js"></script>
+                <script type="text/javascript" src="/web_organization_tree/static/src/js/organization_tree_widget.js"></script>
+            </xpath>
+        </template>
+    </data>
+</openerp>

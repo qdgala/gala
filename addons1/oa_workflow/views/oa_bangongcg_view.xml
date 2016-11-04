@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+        <record model="ir.ui.view" id="view_oa_bangongcg_tree">
+            <field name="name">办公用品采购</field>
+            <field name="model">oa.bangongcg</field>
+            <field name="arch" type="xml">
+                <tree string="办公用品采购">
+                    <field name="apply_date"/>
+                    <field name="department_id"/>
+                    <field name="emp_id"/>
+                    <field name="plan_amount"/>
+                    <field name="state"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_oa_bangongcg_form">
+            <field name="name">办公用品采购</field>
+            <field name="model">oa.bangongcg</field>
+            <field name="arch" type="xml">
+                <form string="办公用品采购">
+                    <header>
+                        <button string="关闭" name="sq_off" states="sq" type="workflow_stop" class="oe_highlight"/>
+
+                        <button string="使用人申请" name="sq_to" states="sq" type="workflow_ok" class="oe_highlight"/>
+                        <button string="部门领导审批" name="bm_cw" states="bm" type="workflow_ok" class="oe_highlight"/>
+                        <button string="财务部门领导审批" name="cw_fz_or_cg" states="cw" type="workflow_ok"
+                                class="oe_highlight"/>
+                        <button string="副总（或总经理）审批" name="fz_cg" states="fz" type="workflow_ok" class="oe_highlight"/>
+                        <button string="采购专员确认" name="cg_ok" states="cg" type="workflow_ok" class="oe_highlight"/>
+
+                        <button string="部门领导驳回" name="bm_sq" states="bm" type="workflow_no" class="oe_highlight"/>
+                        <button string="财务部门领导驳回" name="cw_back" states="cw" type="workflow_no"
+                                class="oe_highlight"/>
+                        <button string="副总（或总经理）驳回" name="fz_cw" states="fz" type="workflow_no" class="oe_highlight"/>
+
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="apply_date"/>
+                                <field name="department_id"/>
+                                <field name="emp_id"/>
+                            </group>
+                            <group>
+                                <field name="name"/>
+                                <field name="plan_amount"/>
+                                <field name="danhao"/>
+                            </group>
+                        </group>
+                        <group string="申购说明">
+                            <field name="cause" nolabel="1" colspan="4"/>
+                        </group>
+                        <group string="附件">
+                            <field name="fujian_ids" nolabel="1" colspan="4"
+                                   domain="[('res_model','=','oa.fukuan'),('res_id','=',id)]"
+                                   context="{'default_res_model':'oa.fukuan','default_res_id':id}"/>
+                        </group>
+                        <group string="审批意见">
+                            <field name="opinion_ids" nolabel="1" readonly="1" colspan="4"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_oa_bangongcg_search">
+            <field name="name">办公用品采购搜索视图</field>
+            <field name="model">oa.bangongcg</field>
+            <field name="arch" type="xml">
+                <search string="办公用品采购搜索视图">
+                    <filter string="待办" name="message_needaction" domain="[('is_needaction','=',True)]"/>
+                    <!--<field name="name"/>-->
+                    <!--<separator/>-->
+                    <!--<filter string="未完成任务" domain="[('state','!=','done')]"/>-->
+                    <!--<separator/>-->
+                    <!--<group expand="0" string="Group By">-->
+                    <!--<filter string="状态" domain="[]" context="{'group_by':'state'}"/>-->
+                    <!--</group>-->
+
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_oa_bangongcg">
+            <field name="name">办公用品采购</field>
+            <field name="res_model">oa.bangongcg</field>
+            <field name="view_type">form</field>
+            <field name="domain"></field>
+            <field name="view_mode">tree,form</field>
+            <!--<field name="context"></field>-->
+            <field name="search_view_id" ref="view_oa_bangongcg_search"/>
+            <field name="view_id" ref="view_oa_bangongcg_tree"/>
+        </record>
+
+        <menuitem id="menu_action_oa_bangongcg" action="action_oa_bangongcg" parent="menu_oa_wkf" sequence="90"
+                  name="办公用品采购"/>
+
+
+    </data>
+</openerp>

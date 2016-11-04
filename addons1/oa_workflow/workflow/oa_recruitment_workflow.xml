@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="oa_recruitment_workflow" model="workflow">
+        <field name="name">招聘申请</field>
+        <field name="osv">oa.recruitment</field>
+        <field name="on_create">True</field>
+    </record>
+
+    <!--活动（Activity）定义-->
+    <!--<record id="activity_oa_recruitment_draft" model="workflow.activity">-->
+    <!--<field name="wkf_id" ref="oa_recruitment_workflow"/>-->
+    <!--<field name="flow_start">True</field>-->
+    <!--<field name="name">草稿</field>-->
+    <!--<field name="kind">function</field>-->
+    <!--<field name="action">write({'state': 'draft')</field>-->
+    <!--</record>-->
+
+    <record id="activity_oa_recruitment_bmldsq" model="workflow.activity">
+        <field name="wkf_id" ref="oa_recruitment_workflow"/>
+        <field name="name">部门领导申请</field>
+        <field name="flow_start">True</field>
+        <field name="kind">function</field>
+        <field name="action">wkf_change_and_notice('bmldsq')</field>
+    </record>
+
+    <record id="activity_oa_recruitment_fzsp" model="workflow.activity">
+        <field name="wkf_id" ref="oa_recruitment_workflow"/>
+        <field name="name">副总审批</field>
+        <field name="kind">function</field>
+        <field name="action">wkf_change_and_notice('fzsp')</field>
+    </record>
+
+    <record id="activity_oa_recruitment_zjlsp" model="workflow.activity">
+        <field name="wkf_id" ref="oa_recruitment_workflow"/>
+        <field name="name">总经理审批</field>
+        <field name="kind">function</field>
+        <field name="action">wkf_change_and_notice('zjlsp')</field>
+    </record>
+
+    <record id="activity_oa_recruitment_xzbqr" model="workflow.activity">
+        <field name="wkf_id" ref="oa_recruitment_workflow"/>
+        <field name="name">行政部确认</field>
+        <field name="kind">function</field>
+        <field name="action">wkf_change_and_notice('xzbqr')</field>
+    </record>
+
+    <record id="activity_oa_recruitment_ok" model="workflow.activity">
+        <field name="wkf_id" ref="oa_recruitment_workflow"/>
+        <field name="flow_stop">True</field>
+        <field name="name">完成</field>
+        <field name="kind">function</field>
+        <field name="action">wkf_change_and_notice('ok')</field>
+    </record>
+
+    <record id="activity_oa_recruitment_cancel" model="workflow.activity">
+        <field name="wkf_id" ref="oa_recruitment_workflow"/>
+        <field name="flow_stop">True</field>
+        <field name="name">取消</field>
+        <field name="kind">function</field>
+        <field name="action">wkf_change_and_notice('cancel')</field>
+    </record>
+
+
+    <!--迁移（Transition）的定义-->
+    <record id="trans_oa_recruitment_bmldsq_cancel" model="workflow.transition">
+        <field name="act_from" ref="activity_oa_recruitment_bmldsq"/>
+        <field name="act_to" ref="activity_oa_recruitment_cancel"/>
+        <field name="signal">bmldsq_cancel</field>
+        <field name="condition">is_tbr()</field>
+        <field name="group_id" ref="oa_workflow.group_oa_department_manager"/>
+    </record>
+
+    <record id="trans_oa_recruitment_bmldsq_fzsp" model="workflow.transition">
+        <field name="act_from" ref="activity_oa_recruitment_bmldsq"/>
+        <field name="act_to" ref="activity_oa_recruitment_fzsp"/>
+        <field name="signal">bmldsq_to</field>
+        <field name="condition">is_tbr() and not is_fz() and is_not_in(['oa_workflow.group_oa_department_cwb'])</field>
+        <field name="group_id" ref="oa_workflow.group_oa_department_manager"/>
+    </record>
+
+    <record id="trans_oa_recruitment_bmldsq_zjlsp" model="workflow.transition">
+        <field name="act_from" ref="activity_oa_recruitment_bmldsq"/>
+        <field name="act_to" ref="activity_oa_recruitment_zjlsp"/>
+        <field name="signal">bmldsq_to</field>
+        <field name="condition">is_tbr() and is_fz()</field>
+        <field name="group_id" ref="oa_workflow.group_oa_department_fz"/>
+    </record>
+    <record id="trans_oa_recruitment_bmldsq_zjlsp2" model="workflow.transition">
+        <field name="act_from" ref="activity_oa_recruitment_bmldsq"/>
+        <field name="act_to" ref="activity_oa_recruitment_zjlsp"/>
+        <field name="signal">bmldsq_to</field>
+        <field name="condition">is_tbr()</field>
+        <field name="group_id" ref="oa_workflow.group_oa_department_cwb"/>
+    </record>
+
+    <record id="trans_oa_recruitment_bmldsq_xzbqr" model="workflow.transition">
+        <field name="act_from" ref="activity_oa_recruitment_bmldsq"/>
+        <field name="act_to" ref="activity_oa_recruitment_xzbqr"/>
+        <field name="signal">bmldsq_to</field>
+        <field name="condition">is_tbr()</field>
+        <field name="group_id" ref="oa_workflow.group_oa_department_boss"/>
+    </record>
+
+    <record id="trans_oa_recruitment_fzsp_zjlsp" model="workflow.transition">
+        <field name="act_from" ref="activity_oa_recruitment_fzsp"/>
+        <field name="act_to" ref="activity_oa_recruitment_zjlsp"/>
+        <field name="signal">fzsp_zjlsp</field>
+        <field name="condition">is_current_fz()</field>
+        <field name="group_id" ref="oa_workflow.group_oa_department_fz"/>
+    </record>
+
+    <record id="trans_oa_recruitment_zjlsp_xzbqr" model="workflow.transition">
+        <field name="act_from" ref="activity_oa_recruitment_zjlsp"/>
+        <field name="act_to" ref="activity_oa_recruitment_xzbqr"/>
+        <field name="signal">zjlsp_xzbqr</field>
+        <field name="group_id" ref="oa_workflow.group_oa_department_boss"/>
+    </record>
+
+    <record id="trans_oa_recruitment_xzbqr_ok" model="workflow.transition">
+        <field name="act_from" ref="activity_oa_recruitment_xzbqr"/>
+        <field name="act_to" ref="activity_oa_recruitment_ok"/>
+        <field name="signal">xzbqr_ok</field>
+        <field name="group_id" ref="oa_workflow.group_oa_department_xzb"/>
+    </record>
+
+    <!--回退流程-->
+    <record id="trans_oa_recruitment_fzsp_bmldsq" model="workflow.transition">
+        <field name="act_from" ref="activity_oa_recruitment_fzsp"/>
+        <field name="act_to" ref="activity_oa_recruitment_bmldsq"/>
+        <field name="signal">fzsp_bmldsq</field>
+        <field name="condition">is_current_fz()</field>
+        <field name="group_id" ref="oa_workflow.group_oa_department_fz"/>
+    </record>
+
+    <record id="trans_oa_recruitment_zjlsp_fzsp" model="workflow.transition">
+        <field name="act_from" ref="activity_oa_recruitment_zjlsp"/>
+        <field name="act_to" ref="activity_oa_recruitment_fzsp"/>
+        <field name="signal">zjlsp_back</field>
+        <field name="condition">not emp_is_cwb()</field>
+        <field name="group_id" ref="oa_workflow.group_oa_department_boss"/>
+    </record>
+
+    <record id="trans_oa_recruitment_zjlsp_bmldsq" model="workflow.transition">
+        <field name="act_from" ref="activity_oa_recruitment_zjlsp"/>
+        <field name="act_to" ref="activity_oa_recruitment_bmldsq"/>
+        <field name="signal">zjlsp_back</field>
+        <field name="condition">emp_is_cwb()</field>
+        <field name="group_id" ref="oa_workflow.group_oa_department_boss"/>
+    </record>
+
+</odoo>

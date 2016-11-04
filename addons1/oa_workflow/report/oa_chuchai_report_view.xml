@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="print_oa_chuchai">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <style>
+                        table {
+                        border: solid 1px #000;
+                        width: 100%;
+                        }
+                        tr{
+                        height:40px;
+                        }
+                        th {
+                        margin-top:5px;
+                        padding-left: 10px;
+                        border: solid 1px #000;
+                        font-size:20px;
+                        }
+
+                        td {
+                        margin-top:5px;
+                        padding-left: 10px;
+                        border: solid 1px #000;
+                        font-size:20px;
+                        align="center";
+                        valign="middle";
+                        }
+                        h2{
+                        font-size:50px;
+                        }
+                    </style>
+                    <h2 align="center">出差申请单</h2>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th>部门</th>
+                                <td>
+                                    <span t-field="o.department_id"/>
+                                </td>
+                                <th>出差人员</th>
+                                <td>
+                                    <span t-field="o.emp_id"/>
+                                </td>
+                                <th>申请日期</th>
+                                <td>
+                                    <span t-field="o.apply_date"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>预计费用</th>
+                                <td colspan="5">
+                                    <span t-field="o.plan_amount"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>随行人员</th>
+                                <td colspan="5">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>出差路线</th>
+                                <td colspan="5">
+                                    <span t-field="o.luxian"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>出差事由</th>
+                                <td colspan="5">
+                                    <span t-field="o.reason"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>预计出差日期</th>
+                                <td colspan="5">
+                                    <span t-field="o.plan_date_a"/>
+                                    至
+                                    <span t-field="o.plan_date_b"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>实际出差日期</th>
+                                <td colspan="5">
+                                    <span t-field="o.real_date_a"/>
+                                    至
+                                    <span t-field="o.real_date_b"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>考勤人员(签字)</th>
+                                <td colspan="5">？？？？</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <report
+            id="report_oa_chuchai_html"
+            string="打印出差单_HTML"
+            model="oa.chuchai"
+            report_type="qweb-html"
+            file="oa_workflow.print_oa_chuchai"
+            name="oa_workflow.print_oa_chuchai"
+    />
+    <report
+            id="report_oa_chuchai_pdf"
+            string="打印出差单_PDF"
+            model="oa.chuchai"
+            report_type="qweb-pdf"
+            file="oa_workflow.print_oa_chuchai"
+            name="oa_workflow.print_oa_chuchai"
+    />
+
+</odoo>

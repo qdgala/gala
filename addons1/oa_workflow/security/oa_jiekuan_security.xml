@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+
+        <record model="ir.rule" id="oa_jiekuan_write_rule">
+            <field name="name">只能修改自己未提交的表单</field>
+            <field name="model_id" ref="model_oa_jiekuan"/>
+            <field name="domain_force">[('state','=','sq'),('create_uid','=',user.id)]</field>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_read" eval="False"/>
+        </record>
+        <record model="ir.rule" id="oa_jiekuan_unlink_rule">
+            <field name="name">非新建状态不允许删除</field>
+            <field name="model_id" ref="model_oa_jiekuan"/>
+            <field name="domain_force">[('state','=','sq')]</field>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="False"/>
+        </record>
+
+        <!--付款申请人 部门主管 分管副总 财务经理 总经理 出纳 -->
+        <record model="ir.rule" id="oa_jiekuan_read1_rule">
+            <field name="name">创建人/申请人 可见</field>
+            <field name="model_id" ref="model_oa_jiekuan"/>
+            <field name="domain_force">
+                ['|',('create_uid','=',user.id),('emp_id','=',user.employee_ids.id)]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('base.group_user')])]"/>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+        <record model="ir.rule" id="oa_jiekuan_read2_rule">
+            <field name="name">部门主管 可见</field>
+            <field name="model_id" ref="model_oa_jiekuan"/>
+            <field name="domain_force">
+                [('state','!=','sq'),('emp_id','in',user.employee_ids.child_ids.ids)]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_manager')])]"/>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+        <record model="ir.rule" id="oa_jiekuan_read3_rule">
+            <field name="name">分管副总可见</field>
+            <field name="model_id" ref="model_oa_jiekuan"/>
+            <field name="domain_force">
+                [('state','not in',['sq','bmsp']),('emp_id','child_of',user.employee_ids.child_ids.ids)]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_fz')])]"/>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+        <record model="ir.rule" id="oa_jiekuan_read4_rule">
+            <field name="name">财务经理 可见</field>
+            <field name="model_id" ref="model_oa_jiekuan"/>
+            <field name="domain_force">
+                [('state','not in',['sq','bmsp','fgfz'])]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_cwb')])]"/>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+        <record model="ir.rule" id="oa_jiekuan_read5_rule">
+            <field name="name">总经理 可见</field>
+            <field name="model_id" ref="model_oa_jiekuan"/>
+            <field name="domain_force">
+                [('state','not in',['sq','bmsp','fgfz','cwsp'])]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_boss')])]"/>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+        <record model="ir.rule" id="oa_jiekuan_read6_rule">
+            <field name="name">出纳 可见</field>
+            <field name="model_id" ref="model_oa_jiekuan"/>
+            <field name="domain_force">
+                [('state','in',['cnqr','lkrqr','ok','off'])]
+            </field>
+            <field name="groups" eval="[(6, 0,  [ref('oa_workflow.group_oa_department_cn')])]"/>
+            <!--对应的权限：-->
+            <field name="perm_create" eval="False"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_read" eval="True"/>
+        </record>
+    </data>
+</openerp>

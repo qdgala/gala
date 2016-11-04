@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="print_oa_jiangcheng">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <style>
+                        table {
+                        border: solid 1px #000;
+                        width: 100%;
+                        }
+                        tr{
+                        height:40px;
+                        }
+                        th {
+                        margin-top:5px;
+                        padding-left: 10px;
+                        border: solid 1px #000;
+                        font-size:20px;
+                        }
+
+                        td {
+                        margin-top:5px;
+                        padding-left: 10px;
+                        border: solid 1px #000;
+                        font-size:20px;
+                        align="center";
+                        valign="middle";
+                        }
+                        h2{
+                        font-size:50px;
+                        }
+                    </style>
+                    <h2 align="center">奖惩呈批表</h2>
+                    <table>
+                        <tr>
+                            <th width="15%">填表日期</th><td width="15%"><span t-field="o.tb_date"/></td>
+                            <th width="15%">填表人</th><td width="15%"><span t-field="o.tb_user_id"/></td>
+                            <th width="15%">填报部门</th><td width="15%"><span t-field="o.tb_department_id"/></td>
+                        </tr>
+                        <tr>
+                            <th>员工编号</th><td><span t-field="o.job_num"/></td>
+                            <th>姓名</th><td><span t-field="o.emp_id"/></td>
+                            <th>入职时间</th><td><span t-field="o.rz_date"/></td>
+                        </tr>
+                        <tr>
+                            <th>部门</th><td><span t-field="o.department_id"/></td>
+                            <th>岗位</th><td><span t-field="o.job_id"/></td>
+                            <th></th><td></td>
+                        </tr>
+                        <tr>
+                            <th>主要事迹或违纪事实</th><td colspan="5"></td>
+                        </tr>
+                        <tr>
+                            <th>奖惩意见</th><td colspan="5"><span t-field="o.reason"/></td>
+                        </tr>
+                        <tr>
+                            <th>审批人员</th><td colspan="5"></td>
+                        </tr>
+                        <tr>
+                            <th>审批意见</th><td colspan="5"></td>
+                        </tr>
+                        <tr>
+                            <th colspan="4">申诉处理</th>
+                            <th>是否申诉</th><td></td>
+                        </tr>
+                        <tr>
+                            <th>申诉处理人员</th><td></td>
+                        </tr>
+                    </table>
+                    <br/>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <report
+            id="report_oa_jiangcheng_html"
+            string="打印奖惩呈批表_HTML"
+            model="oa.jiangcheng"
+            report_type="qweb-html"
+            file="oa_workflow.print_oa_jiangcheng"
+            name="oa_workflow.print_oa_jiangcheng"
+    />
+    <report
+            id="report_oa_jiangcheng_pdf"
+            string="打印奖惩呈批表_PDF"
+            model="oa.jiangcheng"
+            report_type="qweb-pdf"
+            file="oa_workflow.print_oa_jiangcheng"
+            name="oa_workflow.print_oa_jiangcheng"
+    />
+
+</odoo>

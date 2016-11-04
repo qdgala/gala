@@ -1,0 +1,11 @@
+<template>
+
+
+    <t t-name="textbox_pft_wkl">
+        <div class="oe_form_field oe_form_field_text">
+            <textarea class="field_text oe_textbox_pft_wkl" name="description"
+                      style="width:100%; min-height:150px"></textarea>
+        </div>
+    </t>
+
+</template>

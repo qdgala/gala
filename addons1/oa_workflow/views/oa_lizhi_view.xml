@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="0">
+
+        <record model="ir.ui.view" id="view_oa_lizhi_tree">
+            <field name="name">离职申请</field>
+            <field name="model">oa.lizhi</field>
+            <field name="arch" type="xml">
+                <tree string="离职申请">
+                    <field name="create_uid" string="创建人"/>
+                    <field name="emp_id"/>
+                    <field name="department_id"/>
+                    <field name="reason"/>
+                    <field name="apply_date"/>
+                    <field name="lizhi_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_oa_lizhi_form">
+            <field name="name">离职申请</field>
+            <field name="model">oa.lizhi</field>
+            <field name="arch" type="xml">
+                <form string="离职申请">
+                    <header>
+                        <button string="关闭" name="sq_off" states="sq" type="workflow_stop" class="oe_highlight"/>
+
+                        <button string="离职人员申请" name="sq_bmsp" states="sq" type="workflow_submit" class="oe_highlight"/>
+                        <button string="上级领导审批" name="bmsp_lhsp" states="bmsp" type="workflow_ok"
+                                log_field="bm_yj" log_type="reproxy" class="oe_highlight"/>
+                        <button string="上级领导驳回" name="bmsp_sq" states="bmsp" type="workflow_no"
+                                log_field="bm_yj" log_type="reproxy" class="oe_highlight"/>
+
+                        <button string="仓管部经理审批" name="btn_lhsp" type="object" class="oe_highlight"
+                                groups="oa_workflow.group_oa_department_wlb"
+                                attrs="{'invisible':['|',('is_ck','=',True),('state','!=','lhsp')]}"/>
+                        <button string="行政部经理审批" name="btn_lhsp" type="object" class="oe_highlight"
+                                groups="oa_workflow.group_oa_department_xzb"
+                                attrs="{'invisible':['|',('is_xz','=',True),('state','!=','lhsp')]}"/>
+                        <button string="财务部经理审批" name="btn_lhsp" type="object" class="oe_highlight"
+                                groups="oa_workflow.group_oa_department_cwb"
+                                attrs="{'invisible':['|',('is_cw','=',True),('state','!=','lhsp')]}"/>
+
+                        <button string="总经理审批" name="zjlsp_rssp" states="zjlsp" type="workflow_ok"
+                                log_field="zjl_yj" log_type="reproxy"
+                                class="oe_highlight"/>
+                        <button string="人事专员确认" name="rssp_ok" states="rssp" type="workflow_ok" class="oe_highlight"/>
+
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group col="6" states="lhsp">
+                            <field name="is_cw" readonly="1"/>
+                            <field name="is_ck" readonly="1"/>
+                            <field name="is_xz" readonly="1"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="emp_id"/>
+                                <field name="apply_date"/>
+                                <field name="lizhi_date"/>
+                                <field name="create_uid" string="创建人" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="department_id"/>
+                                <field name="gender"/>
+                                <field name="work_days"/>
+                            </group>
+                        </group>
+                        <group string="离职原因">
+                            <field name="reason" nolabel="1" colspan="4"/>
+                        </group>
+                        <group string="交接记录">
+
+                        </group>
+                        <group>
+                            <div>
+                                <h1>说明</h1>
+                                <p>1、 离职人员必须认真填写员工离职表，未进行擅自离职人员工资全额扣除。</p>
+                                <p>2、 离职人员离职当月的考勤天数以公司核定为准。</p>
+                                <p>3、 待扣费用各项从工资中扣除。</p>
+                                <p>4、 离职工资发放随公司发工资时间进行。</p>
+                                <p>5、 离职应提前一个月提出，批准后根据公司要求时间办理完手续，否则工资暂停发放。</p>
+                            </div>
+                        </group>
+                        <group string="审批意见">
+                            <field name="opinion_ids" nolabel="1" readonly="1" colspan="4"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_oa_lizhi_search">
+            <field name="name">离职申请搜索视图</field>
+            <field name="model">oa.lizhi</field>
+            <field name="arch" type="xml">
+                <search string="离职申请搜索视图">
+                    <filter string="待办" name="message_needaction" domain="[('is_needaction','=',True)]"/>
+                    <!--<field name="name"/>-->
+                    <!--<separator/>-->
+                    <!--<filter string="未完成任务" domain="[('state','!=','done')]"/>-->
+                    <!--<separator/>-->
+                    <!--<group expand="0" string="Group By">-->
+                    <!--<filter string="状态" domain="[]" context="{'group_by':'state'}"/>-->
+                    <!--</group>-->
+
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_oa_lizhi">
+            <field name="name">离职申请</field>
+            <field name="res_model">oa.lizhi</field>
+            <field name="view_type">form</field>
+            <field name="domain"></field>
+            <field name="view_mode">tree,form</field>
+            <!--<field name="context"></field>-->
+            <field name="search_view_id" ref="view_oa_lizhi_search"/>
+            <field name="view_id" ref="view_oa_lizhi_tree"/>
+        </record>
+
+        <menuitem id="menu_action_oa_lizhi" action="action_oa_lizhi" parent="menu_oa_wkf" sequence="40" name="离职申请"/>
+
+
+        <record model="ir.ui.view" id="view_oa_lizhi_opinion_form">
+            <field name="name">审批意见</field>
+            <field name="model">oa.lizhi</field>
+            <field name="arch" type="xml">
+                <form string="审批意见">
+                    <group>
+                        <field name="opinion"/>
+                    </group>
+                    <footer>
+                        <button string="审批" type="object" name="btn_lhsp_sp" class="btn-primary"/>
+                        <button string="取消" special="cancel" class="btn-default"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+
+    </data>
+</openerp>

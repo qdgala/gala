@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="print_oa_ruzhi">
+        <t t-call="report.html_container">
+            <t t-foreach="docs" t-as="o">
+                <div class="page">
+                    <style>
+                        table {
+                        border: solid 1px #000;
+                        width: 100%;
+                        }
+                        tr{
+                        height:40px;
+                        }
+                        th {
+                        margin-top:5px;
+                        padding-left: 10px;
+                        border: solid 1px #000;
+                        font-size:20px;
+                        }
+
+                        td {
+                        margin-top:5px;
+                        padding-left: 10px;
+                        border: solid 1px #000;
+                        font-size:20px;
+                        align="center";
+                        valign="middle";
+                        }
+                        h2{
+                        font-size:50px;
+                        }
+                    </style>
+                    <h2 align="center">入职信息登记表</h2>
+
+                    <table>
+                        <tr style="height:0px;">
+                            <th width="13%"></th>
+                            <td width="10%"></td>
+                            <td width="1%"></td>
+                            <th width="10%"></th>
+                            <td width="10%"></td>
+                            <th width="10%"></th>
+                            <td width="14%"></td>
+                            <th width="12%"></th>
+                            <td width="10%"></td>
+                            <td width="10%"></td>
+                        </tr>
+                        <tr>
+                            <th>姓名</th>
+                            <td colspan="2"><span t-field="o.name"/></td>
+                            <th>性别</th>
+                            <td><span t-field="o.gender"/></td>
+                            <th>年龄</th>
+                            <td><span t-field="o.age"/></td>
+                            <th>血型</th>
+                            <td><span t-field="o.blood"/></td>
+                            <td rowspan="3" style="width:160px;padding:0px;">
+                                <img t-if="o.image" t-att-src="'data:image/png;base64,%s' % o.image" style="max-height:160px;align:left"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>籍贯</th>
+                            <td colspan="2"><span t-field="o.native"/></td>
+                            <th>民族</th>
+                            <td><span t-field="o.nation"/></td>
+                            <th>职称</th>
+                            <td><span t-field="o.job"/></td>
+                            <th>最高学历</th>
+                            <td><span t-field="o.xueli"/></td>
+                        </tr>
+                        <tr>
+                            <th>健康情况</th>
+                            <td colspan="2"><span t-field="o.health"/></td>
+                            <th>身高</th>
+                            <td><span t-field="o.height"/></td>
+                            <th>体重</th>
+                            <td><span t-field="o.weight"/></td>
+                            <th>婚姻情况</th>
+                            <td><span t-field="o.marital"/></td>
+                        </tr>
+                        <tr>
+                            <th>身份证号码</th>
+                            <td colspan="5"><span t-field="o.id_no"/></td>
+                            <th>联系电话</th>
+                            <td colspan="3"><span t-field="o.phone"/></td>
+                        </tr>
+                        <tr>
+                            <th>户籍所在地</th>
+                            <td colspan="5"><span t-field="o.native_place"/></td>
+                            <th>特长技能</th>
+                            <td colspan="3"><span t-field="o.skills"/></td>
+                        </tr>
+                        <tr>
+                            <th>现居住地址</th>
+                            <td colspan="5"><span t-field="o.addr"/></td>
+                            <th>期望薪资</th>
+                            <td colspan="3"><span t-field="o.plan_salary"/></td>
+                        </tr>
+                        <tr>
+                            <th colspan="2">紧急联系人及电话</th>
+                            <td colspan="5"><span t-field="o.emergency_phone"/></td>
+                            <th>邮政编码</th>
+                            <td colspan="2"><span t-field="o.zip_code"/></td>
+                        </tr>
+                        <tr>
+                            <th>工作经验</th>
+                            <td colspan="10" style="padding: 0px">
+                                <table>
+                                    <tr>
+                                        <th>起止年月</th>
+                                        <th>工作单位</th>
+                                        <th>职位</th>
+                                        <th>离职原因</th>
+                                    </tr>
+                                    <t t-foreach="o.work_exp_ids" t-as="w">
+                                        <td><span t-field="w.qzny"/></td>
+                                        <td><span t-field="w.company"/></td>
+                                        <td><span t-field="w.job"/></td>
+                                        <td><span t-field="w.lizhi_yuanyin"/></td>
+                                    </t>
+                                    <tr>
+                                        <td>.</td>
+                                        <td>.</td>
+                                        <td>.</td>
+                                        <td>.</td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>教育培训经历</th>
+                            <td colspan="10" style="padding: 0px">
+                                <table>
+                                    <tr>
+                                        <th>起止年月</th>
+                                        <th>教育培训机构</th>
+                                        <th>专业</th>
+                                        <th>证书</th>
+                                    </tr>
+                                    <t t-foreach="o.edu_exp_ids" t-as="w">
+                                        <td><span t-field="w.qzny"/></td>
+                                        <td><span t-field="w.jigou"/></td>
+                                        <td><span t-field="w.zhuanye"/></td>
+                                        <td><span t-field="w.zhengshu"/></td>
+                                    </t>
+                                    <tr>
+                                        <td>.</td>
+                                        <td>.</td>
+                                        <td>.</td>
+                                        <td>.</td>
+                                    </tr>
+                                </table>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>家庭信息</th>
+                            <td colspan="10" style="padding: 0px">
+                                <table>
+                                    <tr>
+                                        <th>关系</th>
+                                        <th>姓名</th>
+                                        <th>工作单位</th>
+                                        <th>联系电话</th>
+                                    </tr>
+                                    <t t-foreach="o.family_info_ids" t-as="w">
+                                        <td><span t-field="w.relation"/></td>
+                                        <td><span t-field="w.name"/></td>
+                                        <td><span t-field="w.unit"/></td>
+                                        <td><span t-field="w.phone"/></td>
+                                    </t>
+                                    <tr>
+                                        <td>.</td>
+                                        <td>.</td>
+                                        <td>.</td>
+                                        <td>.</td>
+                                    </tr>
+                                </table>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="3">受过何种奖励或专业训练</th>
+                            <td colspan="9"><span t-field="o.rongyu"/></td>
+                        </tr>
+                        <tr>
+                            <th>填表人声明</th>
+                            <td colspan="10">
+                                本人保证所填写资料属实，保证遵守公司各项规章制度，若有不实之处，本人愿意无条件接受公司处罚甚至辞退，并不要求任何补助。
+                                <br/>
+                                声明人：<span t-field="o.create_uid"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>入职培训</th>
+                            <td colspan="10">
+                                本人已接受公司岗前及员工规章制度的培训
+                                <br/>
+                                员工签字：<span t-field="o.name"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="11"><p align="center">以下为公司填写</p></th>
+                        </tr>
+                        <tr>
+                            <th>入职时间</th><td colspan="3"><span t-field="o.ruzhi_date"/></td>
+                            <th>所属部门</th><td colspan="2"><span t-field="o.department_id"/></td>
+                            <th>岗位/职务</th><td colspan="2"><span t-field="o.job_id"/></td>
+                        </tr>
+                        <tr>
+                            <th>试用时间</th><td colspan="3"><span t-field="o.shiyong_sj"/></td>
+                            <th>试用期工资</th><td colspan="2"><span t-field="o.shiyong_gz"/></td>
+                            <th>转正后工资</th><td colspan="2"><span t-field="o.zhuanzheng_gz"/></td>
+                        </tr>
+                        <tr>
+                            <th>审批意见</th><td colspan="9"></td>
+                        </tr>
+                    </table>
+
+                    <br/>
+
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <report
+            id="report_oa_ruzhi_html"
+            string="打印入职信息登记表_HTML"
+            model="oa.ruzhi"
+            report_type="qweb-html"
+            file="oa_workflow.print_oa_ruzhi"
+            name="oa_workflow.print_oa_ruzhi"
+    />
+    <report
+            id="report_oa_ruzhi_pdf"
+            string="打印入职信息登记表_PDF"
+            model="oa.ruzhi"
+            report_type="qweb-pdf"
+            file="oa_workflow.print_oa_ruzhi"
+            name="oa_workflow.print_oa_ruzhi"
+    />
+
+</odoo>
